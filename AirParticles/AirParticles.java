@@ -36,5 +36,17 @@
      */
     public static void main (String[] args) {
         int totalLines = StdIn.readInt();
+
+        double[] communities = new double[totalLines];
+
+        int index = 0;
+        while (!StdIn.isEmpty() && index < communities.length) {
+            communities[index] = StdIn.readDouble();
+            index++;
+        }
+
+        double highest = findHighestLevel(communities);
+
+        StdOut.println("Highest PM2.5 Level is " + highest);
     }
 }
