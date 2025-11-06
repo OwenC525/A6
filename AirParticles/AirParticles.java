@@ -18,9 +18,15 @@
     
     public static double findHighestLevel (double[] communities) {
 
-        // WRITE YOUR CODE HERE
+        double max = communities[0];
+
+        for (int i = 1; i < communities.length; i++) {
+            if (communities[i] > max) {
+                max = communities[i];
+            }
+        }
 	
-        return 0.0; // replace this line
+        return max;
     }
 
     /*
@@ -29,6 +35,6 @@
      * and displays the value returned by the function.
      */
     public static void main (String[] args) {
-        // WRITE YOUR CODE HERE
+        int totalLines = StdIn.readInt();
     }
 }
