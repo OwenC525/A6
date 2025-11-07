@@ -148,10 +148,16 @@ public class Hangman {
         }
 
         int points = 0;
+
         if (won && totalGuesses > 0) {
-            points = 100 - (wrongGuesses * 100 / totalGuesses);
-            if (points < 0) points = 0;
+            double f = (double) wrongGuesses / totalGuesses;
+            double p = 100.0 - f * 100.0;
+            points = (int) p;
+            if (points < 0) {
+                points = 0;
+            }
         }
+        
         StdOut.println("Points: " + points);
 
         StringBuilder sb = new StringBuilder();
