@@ -58,9 +58,16 @@ public class Hangman {
      * @return true if the guessed letter is in the word, or false if it is not  
      */
     public static boolean checkLetter(char[] userLetters, char[] word, char guess){
-        // /* WRITE YOUR CODE HERE */
+        boolean found = false;
 
-         return false; //TESTING RETURN STATEMENT. KEEP COMMENTED UNTIL METHOD IS WRITTEN
+        for (int i =0; i < word.length; i++) {
+            if (word[i] == guess) {
+                userLetters[i] = guess;
+                found = true;
+            }
+        }
+
+         return found; //TESTING RETURN STATEMENT. KEEP COMMENTED UNTIL METHOD IS WRITTEN
     }
 
     /**
@@ -74,10 +81,21 @@ public class Hangman {
      * @return true if the letter was not guessed before, or false if the letter was already guessed
      */
     public static boolean markGuessed(boolean[] guessedLetters, char letter){
-        /* WRITE YOUR CODE HERE */
+        int index = (int) letter - (int) 'a';
+
+        if (index < 0 || index >= guessedLetters.length) {
+            return false;
+        }
+
+        if (guessedLetters[index]) {
+            return false;
+        } else {
+            guessedLetters[index] = true;
+            return true;
+        }
 
 
-         return true;    // TESTING RETURN STATEMENT. KEEP COMMENTED UNTIL METHOD IS WRITTEN
+             // TESTING RETURN STATEMENT. KEEP COMMENTED UNTIL METHOD IS WRITTEN
                         //^WHEN WE WORK WITH DRIVERS SET THIS TO RETURN TRUE, OR ELSE THE DRIVER WILL NOT WORK
     }
 
@@ -89,10 +107,15 @@ public class Hangman {
      * @return  true if there was a win, or false if there wasn’t. 
      */
     public static boolean checkWin(char[] userLetters){
-        /* WRITE YOUR CODE HERE */
+        for (int i = 0; i < userLetters.length; i++) {
+            if (userLetters[i] == '_') {
+                return false;
+            }
+        }
+        return true;
 
 
-         return false; // TESTING RETURN STATEMENT. KEEP COMMENTED UNTIL METHOD IS WRITTEN
+          // TESTING RETURN STATEMENT. KEEP COMMENTED UNTIL METHOD IS WRITTEN
     }
 
     /**
@@ -114,7 +137,31 @@ public class Hangman {
      * @param outputFile The name of the output file to print out to 
      */
     public static void exportStats(char[] userLetters, char[] word, int totalGuesses, int wrongGuesses, String outputFile){
-            //WRITE YOUR CODE HERE
+        StdOut.setFile(outputFile);
+
+        boolean won = checkWin(userLetters);
+
+        if (won) {
+            StdOut.println("You won");
+        } else {
+            StdOut.println("You lost");
+        }
+
+        int points = 0;
+        if (won && totalGuesses > 0) {
+            points = 100 - (wrongGuesses * 100 / totalGuesses);
+            if (points < 0) points = 0;
+        }
+        StdOut.println("Points: " + points);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < word.length; i++) {
+            sb.append(word[i]);
+        }
+        StdOut.println("The word was: " + sb.toString());
+
+        StdOut.println("Total guesses: " + totalGuesses);
+        StdOut.println("Incorrect guesses: " + wrongGuesses);
     }
 
 
